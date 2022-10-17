@@ -4,6 +4,14 @@ regex:!iss
 flags:gmi
 */
 
+const result = find(20);
+
+function find(cn) {
+  const result = cn > 100 && cn < 200 ? true : ( () => {
+    switch ( cn ) { case 11: return 22; case 20: return 21; default: return 100; } } )();
+  return result;
+}
+
 var ISS = Class.create();
 ISS.prototype = {
     initialize: function() {
