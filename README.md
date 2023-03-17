@@ -1,6 +1,6 @@
 # SlackerBot
 
-This bot is what controls the @Slacker bot on the [sndevs.com](https://sndevs.com/) slack workspace.
+This bot is what controls the @Slacker bot on the [sndevs.com](https://sndevs.com/) slack workspace. test
 
 🔔🔔🔔<br>
 ***CONTRIBUTORS must follow all guidelines in [CONTRIBUTING.md](CONTRIBUTING.md)*** or run the risk of having your Pull Requests labeled as spam.<br>
