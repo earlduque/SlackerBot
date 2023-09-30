@@ -9,3 +9,4 @@ if (sentence == '') {
 } else {
 	new x_snc_slackerbot.Slacker().send_chat(current, sentence.split(' ').join(' :clap: '), current.thread_ts);
 }
+//test
