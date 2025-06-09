@@ -5,56 +5,45 @@ flags:i
 */
 
 (function(){
-  var avg, matches, message, pattern, sides, sum, total_dice, 
-      rolls = [];
+  var pattern = /^!roll (-?)(\d*)d(-?)(\d*)/i;
+  var matches = current.text.match(pattern);
 
-  pattern = /^\!roll (-?)(\d*)d(-?)(\d*)/i;
-  matches = current.text.match( pattern );
-
-  if( ! matches ){ 
-    new Slacker().send_chat( current, ':upside_down_face: Say `number` `d` `number`!', false );
-    return null;
-  }
-  
-  if( matches[1] == '-' || matches[3] == '-' ){
-    new Slacker().send_chat( current, 'Stop that', false );
-    return null;
+  if (!matches) {
+    new Slacker().send_chat(current, ':upside_down_face: Say `number` `d` `number`!', false);
+    return;
   }
 
-  try{
-    total_dice = parseInt( matches[2], 10 );
-    sides = parseInt( matches[4], 10 );
+  if (matches[1] === '-' || matches[3] === '-') {
+    new Slacker().send_chat(current, 'Stop that', false);
+    return;
   }
-  catch( e ){
-    new Slacker().send_chat( current, 'One of those is not a number!', false );
-    return null;
-  }
-  
-  if ( total_dice > 100 || sides > 1000000 ){
-		new Slacker().send_chat( current, 'You rolled: a lot', false );
-		return;
-	}
 
-  for( var i=1; i<= total_dice; i++ ){
-    rolls.push( Math.floor( Math.random() * sides ) + 1 );
-  }
-  
-  sum = rolls.reduce( function( total, roll ){
-    total += roll;
-    return total;
-  }, 0 );
+  var total_dice = parseInt(matches[2], 10);
+  var sides = parseInt(matches[4], 10);
 
-  avg = sum / total_dice;
-  message = [
+  if (isNaN(total_dice) || isNaN(sides) || total_dice < 1 || sides < 1) {
+    new Slacker().send_chat(current, 'One of those is not a number!', false);
+    return;
+  }
+
+  if (total_dice > 100 || sides > 1000000) {
+    new Slacker().send_chat(current, 'You rolled: a lot', false);
+    return;
+  }
+
+  var rolls = Array.from({ length: total_dice }, () => Math.floor(Math.random() * sides) + 1);
+  var sum = rolls.reduce((total, roll) => total + roll, 0);
+  var avg = sum / total_dice;
+
+  var message = [
     'You rolled: ',
-    rolls.join( ', ' ),
+    rolls.join(', '),
     '.\nAverage of ',
     avg,
     '.\nSum of ',
     sum
-    ].join('');
-  
-  new Slacker().send_chat( current, message, false );
-  
+  ].join('');
+
+  new Slacker().send_chat(current, message, false);
 })();
 
